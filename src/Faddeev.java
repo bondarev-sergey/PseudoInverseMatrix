@@ -11,19 +11,20 @@ public class Faddeev {
                 {1, 1, -3, -1, -1},
                 {1, 2, -4, 4, 0}
         };
+
         long[][] A3 = {
                 {1, 2, 0, 0, -1},
                 {1, 2, 0, 1, -1},
                 {1, 2, 0, 0, -1},
                 {1, 2, 1, 0, 0}
         };
-        long[][] A2 = {
+        long[][] A = {
                 {1, 0, 1, 0, -2},
                 {0, 2, 1, 0, -1},
                 {1, 0, 0, 2, -1},
                 {0, 2, 0, 2, -2}
         };
-        long[][] A = {
+        long[][] A2 = {
                 { -12, 0, 0, 0 },
                 { 0, 0, 0, 0 },
                 { 0, 0, -12, 0 },
@@ -31,6 +32,10 @@ public class Faddeev {
         };
         AT = Matrix.transposeMatrix(A);
         AAT = Matrix.multiplyMatrices(AT, A);
+        System.out.println("A^T");
+        Matrix.printMatrix(AT);
+        System.out.println("A*A^T");
+        Matrix.printMatrix(AAT);
 
         long[][] F = new long[A[0].length][A[0].length];
         for (int i = 0; i < A[0].length; i++)

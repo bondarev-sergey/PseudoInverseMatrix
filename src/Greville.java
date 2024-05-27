@@ -23,11 +23,17 @@ public class Greville {
                 {1, 1, -3, -1, -1},
                 {1, 2, -4, 4, 0}
         };
-        long[][] A = {
+        long[][] A2 = {
                 { -12, 0, 0, 0 },
                 { 0, 0, 0, 0 },
                 { 0, 0, -12, 0 },
                 { 0, 0, 0, 0 }
+        };
+        long[][] A = {
+                {1, 0, 1, 0, -2},
+                {0, 2, 1, 0, -1},
+                {1, 0, 0, 2, -1},
+                {0, 2, 0, 2, -2}
         };
         long[][] T1 = Matrix.transposeMatrix(getColumnOfA(A, 1, 1));
         long[][] t1 = Matrix.multiplyMatrices(T1, getColumnOfA(A, 1, 1));
@@ -81,13 +87,17 @@ public class Greville {
     public static PseudoInverseMatrix start(long[][] A, long[][] T, long[][] t, int step) {
         System.out.println("Шаг " + step);
         long[][] left = Matrix.multiplyMatriceByConstant(getColumnOfA(A, step, 1), t[0][0]);
+        System.out.println("left");
+        Matrix.printMatrix(left);
         long[][] right = Matrix.multiplyMatrices(Matrix.multiplyMatrices(getColumnOfA(A, 1, step - 1), T), getColumnOfA(A, step, 1));
+        System.out.println("right");
+        Matrix.printMatrix(right);
         long[][] C = Matrix.subtractMatrices(left, right);
         System.out.println("C" + step);
         Matrix.printMatrix(C);
         long[][] newt;
         long[][] F;
-        if (C[0][0] != 0) {
+        if (Matrix.getSumOfElements(C) != 0) {
             newt = Matrix.subtractMatrices(
                     Matrix.multiplyMatrices(t, getLengthOfVector(getColumnOfA(A, step, 1))),
                     Matrix.multiplyMatrices(Matrix.multiplyMatrices(Matrix.multiplyMatrices(
@@ -102,8 +112,14 @@ public class Greville {
             newt = Matrix.getSumOfMatrices(t_squared, getLengthOfVector(Ta2));
             F = Matrix.multiplyMatrices(Matrix.multiplyMatrices(Matrix.transposeMatrix(getColumnOfA(A, step, 1)), Matrix.transposeMatrix(T)), T);
         }
+        System.out.println("F:");
+        Matrix.printMatrix(F);
         long[][] subtraction = Matrix.subtractMatrices(Matrix.getUnitMatrix(F[0].length, newt[0][0]), Matrix.multiplyMatrices(getColumnOfA(A, step, 1), F));
+        System.out.println("subtraction:");
+        Matrix.printMatrix(subtraction);
         long[][] resultForNewT = Matrix.multiplyMatrices(T, subtraction);
+        System.out.println("resultForNewT:");
+        Matrix.printMatrix(resultForNewT);
         long[][] newT = Matrix.concatenateMatricesVertically(Matrix.divideMatriceByConstant(resultForNewT, t[0][0]), F);
         ArrayList<Long> numbers = new ArrayList<>();
         numbers.add(newt[0][0]);

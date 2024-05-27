@@ -122,4 +122,14 @@ public class Matrix {
         }
         return I;
     }
+
+    public static long getSumOfElements(long[][] firstMatrix) {
+        long sum = 0;
+        for (int i = 0; i < firstMatrix.length; i++) {
+            for (int j = 0; j < firstMatrix[0].length; j++) {
+                sum += firstMatrix[i][j];
+            }
+        }
+        return sum;
+    }
 }
